@@ -1,6 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -70,7 +72,10 @@ public class RobotContainer {
   private void configureBindings() {
     // A → zero heading
     new edu.wpi.first.wpilibj2.command.button.JoystickButton(m_driver, XboxController.Button.kA.value)
-        .onTrue(new edu.wpi.first.wpilibj2.command.InstantCommand(m_swerve::zeroHeading, m_swerve));
+        .onTrue(new InstantCommand(() -> {
+        m_swerve.zeroHeading();
+        m_swerve.resetPose(new Pose2d());
+    }, m_swerve));
 
     // Y → toggle mode on the fly
     new edu.wpi.first.wpilibj2.command.button.JoystickButton(m_driver, XboxController.Button.kY.value)

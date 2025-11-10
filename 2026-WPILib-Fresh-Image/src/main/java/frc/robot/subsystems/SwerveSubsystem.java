@@ -7,8 +7,11 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+//import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
@@ -48,20 +51,25 @@ public class SwerveSubsystem extends SubsystemBase {
           Constants.BACK_LEFT_LOCATION,
           Constants.BACK_RIGHT_LOCATION);
 
-  private final SwerveDriveOdometry m_odometry =
-      new SwerveDriveOdometry(m_kinematics, getYaw(), getModulePositions());
-      
+  //private final SwerveDriveOdometry m_odometry =
+  //    new SwerveDriveOdometry(m_kinematics, getYaw(), getModulePositions());
+  // replace m_odometry with:
+  private final SwerveDrivePoseEstimator m_pose =
+      new SwerveDrivePoseEstimator(m_kinematics, getYaw(), getModulePositions(), new Pose2d());
+        
+  // Add Field2d so you can see the robot in sim/real
+  private final Field2d m_field = new Field2d();
 
   // Driver input conditioning
   private final SlewRateLimiter m_xLimiter = new SlewRateLimiter(Constants.XY_SLEW_RATE);
   private final SlewRateLimiter m_yLimiter = new SlewRateLimiter(Constants.XY_SLEW_RATE);
   private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(Constants.ROT_SLEW_RATE);
-
+  
   private Constants.RobotMode m_mode = Constants.DEFAULT_MODE;
 
-  public SwerveSubsystem() {
-    // Optional: zero the gyro at startup for field-relative driving
-    zeroHeading();
+  public SwerveSubsystem() {    
+    zeroHeading(); // zero the gyro at startup for field-relative driving
+    SmartDashboard.putData("Field", m_field); //construct Field
   }
 
   private SwerveModulePosition[] getModulePositions() {
@@ -136,18 +144,21 @@ public class SwerveSubsystem extends SubsystemBase {
     m_pigeon.reset();
   }
 
-  public Pose2d getPose() {
-    return m_odometry.getPoseMeters();
-  }
-
+  
+  // getters/updates for pose estimator
+  public Pose2d getPose() { return m_pose.getEstimatedPosition(); }
+  
   public void resetPose(Pose2d pose) {
-    m_odometry.resetPosition(getYaw(), getModulePositions(), pose);
+    m_pose.resetPosition(getYaw(), getModulePositions(), pose);
   }
 
   @Override
   public void periodic() {
-    // Update odometry from current measured states and gyro yaw
-    m_odometry.update(getYaw(), getModulePositions());
+    // Update pose estimator.
+    m_pose.update(getYaw(), getModulePositions());
+    
+    // Update field visualization
+    m_field.setRobotPose(getPose());    
   }
 
   // ---------------- Simulation ----------------
