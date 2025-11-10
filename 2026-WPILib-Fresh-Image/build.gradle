@@ -102,3 +102,10 @@ wpi.java.configureTestTasks(test)
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
+
+// Helpful: enforce Java 17 for 2025 season templates
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
