@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import frc.robot.Constants;
-import frc.robot.Constants.CanIds;
-import frc.robot.Constants.RobotMode;
+//import frc.robot.Constants.CanIds;
+//import frc.robot.Constants.RobotMode;
 
 public class SwerveSubsystem extends SubsystemBase {
 

@@ -5,13 +5,13 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.CANcoder;
-import com.ctre.phoenix6.hardware.Pigeon2;
+//import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.ControlRequest;
+//import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.sim.CANcoderSimState;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 
@@ -140,8 +140,7 @@ public class SwerveModule {
    */
   public void setDesiredState(SwerveModuleState desired) {
     // Optimize state relative to current module angle
-    SwerveModuleState optimized =
-        SwerveModuleState.optimize(desired, getAngle());
+    SwerveModuleState optimized = SwerveModuleState.optimize(desired, getAngle());
 
     // Steer: convert target angle (rad) into motor rotations
     double targetAngleRad = optimized.angle.getRadians() + m_steerOffsetRad;
