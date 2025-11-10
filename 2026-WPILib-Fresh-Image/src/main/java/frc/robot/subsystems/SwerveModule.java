@@ -64,11 +64,11 @@ public class SwerveModule {
   private double m_simDriveRotorPos = 0.0;   // motor rotations
 
   /**
-   * @param driveId       TalonFX CAN ID (drive)
-   * @param steerId       TalonFX CAN ID (steer)
-   * @param cancoderId    CANcoder ID, or -1 if not used
-   * @param steerOffsetRad Absolute angle offset of the module’s zero, in radians
-   * @param busName       CAN bus name (e.g. CANivore), or null for default
+   * - driveId       TalonFX CAN ID (drive)
+   * - steerId       TalonFX CAN ID (steer)
+   * - cancoderId    CANcoder ID, or -1 if not used
+   * - steerOffsetRad Absolute angle offset of the module’s zero, in radians
+   * - busName       CAN bus name (e.g. CANivore), or null for default
    */
   public SwerveModule(int driveId, int steerId, int cancoderId, double steerOffsetRad, String busName) {
     m_steerOffsetRad = steerOffsetRad;

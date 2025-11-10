@@ -56,6 +56,17 @@ public class RobotContainer {
     }, m_swerve));
   }
 
+
+/*
+| Control              | Function                                          | Notes / Behavior                                                                             |
+| ---------------------| ------------------------------------------------- | ---------------------------------------------------------------------------------------------|
+| Left Stick (Y-axis)  | Forward / Backward drive                          | Pushing up drives forward (+X field axis).                                                   |
+| Left Stick (X-axis)  | Strafe left / right                               | Pushing right strafes robot right (+Y field axis).                                           |
+| Right Stick (X-axis) | Rotate robot (turn)                               | Right = clockwise, Left = counterclockwise.                                                  |
+| A Button             | Zero heading (reset gyro)                         | Calls m_swerve.zeroHeading(), sets Pigeon2 yaw to 0. Useful if field-relative control drifts.|
+| Y Button             | Toggle mode between COMPETITION_MODE and DEMO_MOD | Switches between full-speed and 50%-speed operation instantly. Works live during teleop.     |
+| (Other buttons)      | —                                                 | Currently unused — available for future features (e.g. auto align, intake, shoot).           |
+*/
   private void configureBindings() {
     // A → zero heading
     new edu.wpi.first.wpilibj2.command.button.JoystickButton(m_driver, XboxController.Button.kA.value)

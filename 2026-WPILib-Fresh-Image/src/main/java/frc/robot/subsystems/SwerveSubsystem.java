@@ -77,10 +77,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
   /**
    * Drive the robot with requested chassis speeds (field-relative or robot-relative).
-   * @param xSpeed  forward m/s (+X)
-   * @param ySpeed  left m/s (+Y)
-   * @param omega   CCW rad/s
-   * @param fieldRelative true for field-relative using Pigeon2 yaw
+   * -  xSpeed  forward m/s (+X)
+   * -  ySpeed  left m/s (+Y)
+   * -  omega   CCW rad/s
+   * -  fieldRelative true for field-relative using Pigeon2 yaw
    */
   public void drive(double xSpeed, double ySpeed, double omega, boolean fieldRelative) {
     // Mode scaling (DEMO_MODE halves max outputs)
